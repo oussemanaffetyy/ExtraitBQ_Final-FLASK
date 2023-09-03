@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block body %}
+<br><br>
+
+<br><br>
+<div class="row">
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th>Filename</th>
+                <th>Predictions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for filename, prediction in results.items() %}
+                <tr>
+                    <td>{{ filename }}</td>
+                    <td>{{ prediction }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<form action="/save_csv" method="POST">
+    {% for filename, prediction in results.items() %}
+        <input type="hidden" name="results[]" value="{{ prediction }}">
+    {% endfor %}
+    <input type="submit" value="Save to CSV" class="btn btn-primary">
+</form>
+
+{% endblock %}
